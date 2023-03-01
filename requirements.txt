@@ -1,0 +1,12 @@
+celery==5.2.7
+Django==3.2
+django-cors-headers==3.10.1
+django-filter==22.1
+django-phonenumbers==1.0.1
+django-phonenumber-field==5.1.0
+djangorestframework==3.14.0
+djangorestframework-jwt==1.11.0
+psycopg2==.9.5
+python-dotenv==0.21.0
+python-dateutil==2.8.2
+drf-yasg==1.21.4
