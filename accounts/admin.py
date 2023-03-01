@@ -9,6 +9,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'email', 'phone_number', 'role')
     search_fields = ('first_name', 'last_name', 'email', 'phone_number')
     list_filter = ('role',)
+    exclude = ('password', 'groups', 'user_permissions')
 
 
 @admin.register(PatientDetail)
