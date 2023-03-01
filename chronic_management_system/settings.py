@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,18 +25,23 @@ SECRET_KEY = '1__##h#vi=*=1vikvevo2cml#835jj*$)yi$!0ff1lg_^utigv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['54.218.193.40']
+ALLOWED_HOSTS = ['54.218.193.40', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -74,11 +79,17 @@ WSGI_APPLICATION = 'chronic_management_system.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': "chronic_db",
+            'USER': "sqldev",
+            'PASSWORD': "sqlpass",
+            'HOST': "localhost",
+            'PORT': 5432
+        }
     }
-}
+
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation
@@ -118,3 +129,63 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic/")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'imei',
+    'version'
+]
+
+JWT_SECRET_KEY = "WefTHy%$SD@hj&*nmgtb4564EfWx#!"
+
+JWT_AUTH = {
+    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
+
+    'JWT_SECRET_KEY': JWT_SECRET_KEY,
+    'JWT_GET_USER_SECRET_KEY': None,
+    'JWT_PUBLIC_KEY': None,
+    'JWT_PRIVATE_KEY': None,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_AUTH_HEADER_PREFIX': 'Token',
+    'JWT_AUTH_COOKIE': None,
+}
+
+# Swagger Settings
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        "apiKey": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
