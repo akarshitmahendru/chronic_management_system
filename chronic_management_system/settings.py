@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'accounts',
+    'disease_management'
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'chronic_management_system.wsgi.application'
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Database
