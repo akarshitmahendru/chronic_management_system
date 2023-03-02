@@ -51,13 +51,15 @@ class PatientAttributes(ChronicToolEnum):
 
 PLAN_FREQUENCY = (
     (1, 'Day'),
-    (2, 'Hours')
+    (2, 'Hours'),
+    (3, 'Minutes')
 )
 
 
 class PlanFrequencyEnum(ChronicToolEnum):
     DAY = 1
     HOURS = 2
+    MINUTES = 3
 
 
 class PlanEnum(ChronicToolEnum):

@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
 
 from utils.constants import PLAN_FREQUENCY, PlanEnum, PlanFrequencyEnum, PATIENT_PLAN, PLAN_STATUS, PlanStatusEnum
 from ckeditor.fields import RichTextField
@@ -52,6 +55,16 @@ class PatientPersonalizedPlan(models.Model):
         else:
             patient_identifier = f"{self.patient.phone_number}"
         return f"{self.get_plan_display()} Plan of {patient_identifier} => {self.name}"
+
+    def fetch_scheduled_time(self):
+        time_now = timezone.now()
+        if self.frequency == PlanFrequencyEnum.MINUTES.value:
+            return time_now + datetime.timedelta(minutes=self.magnitude)
+        elif self.frequency == PlanFrequencyEnum.HOURS.value:
+            return time_now + datetime.timedelta(hours=self.magnitude)
+        else:
+            return time_now + datetime.timedelta(days=self.magnitude)
+
 
 
 

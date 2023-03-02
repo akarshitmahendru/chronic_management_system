@@ -1,6 +1,7 @@
 from django.contrib import admin
 from disease_management.models import Disease, PatientPersonalizedPlan, DiseaseDefaultPlan
 from utils.constants import RoleEnum
+from notifications.models import NotificationsScheduler
 
 # Register your models here.
 
@@ -34,3 +35,11 @@ class PatientPersonalizedPlanAdmin(admin.ModelAdmin):
         if db_field.name == "patient":
             kwargs["queryset"] = User.objects.filter(role=RoleEnum.PATIENT.value)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        super(PatientPersonalizedPlanAdmin, self).save_model(request, obj, form, change)
+        from notifications.models import NotificationsScheduler
+        scheduled_time = obj.fetch_scheduled_time()
+        NotificationsScheduler.objects.update_or_create(patient_plan_id=obj.id,
+                                                        defaults={"scheduled_time": scheduled_time})
+

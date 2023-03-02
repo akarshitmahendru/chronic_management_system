@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import datetime
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'accounts',
-    'disease_management'
+    'disease_management',
+    'notifications'
 ]
 
 MIDDLEWARE = [
@@ -202,3 +204,17 @@ SWAGGER_SETTINGS = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_IGNORE_RESULT = False
+
+CELERY_BEAT_SCHEDULE = {
+    'five_minute_task': {
+        "task": "utils.tasks.clear_notification_scheduler",
+        "schedule": crontab(minute=5)
+    }
+}
