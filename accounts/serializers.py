@@ -76,7 +76,9 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
 
     def get_medical_history(self, obj):
         qs = PatientMedicalHistory.objects.filter(patient_id=obj.patient_id).first()
-        return PatientMedicalHistorySerializer(data=qs, many=False).data
+        if qs:
+            return PatientMedicalHistorySerializer(data=qs, many=False).data
+        return []
 
     class Meta:
         model = PatientDetail
