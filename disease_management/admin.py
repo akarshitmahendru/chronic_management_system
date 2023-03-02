@@ -1,5 +1,5 @@
 from django.contrib import admin
-from disease_management.models import Disease, PatientPersonalizedPlan
+from disease_management.models import Disease, PatientPersonalizedPlan, DiseaseDefaultPlan
 from utils.constants import RoleEnum
 
 # Register your models here.
@@ -10,6 +10,16 @@ class DiseaseAdmin(admin.ModelAdmin):
     list_display = ('disease_name', 'is_chronic')
     search_fields = ('disease_name',)
     list_filter = ('is_chronic',)
+
+
+@admin.register(DiseaseDefaultPlan)
+class DiseasePlanAdmin(admin.ModelAdmin):
+    list_display = ('disease_name', 'priority')
+    search_fields = ('disease__disease_name',)
+    autocomplete_fields = ('disease',)
+
+    def disease_name(self, obj):
+        return obj.disease.disease_name
 
 
 @admin.register(PatientPersonalizedPlan)
