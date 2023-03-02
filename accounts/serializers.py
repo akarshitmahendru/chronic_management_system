@@ -30,13 +30,16 @@ class PatientMedicalHistorySerializer(serializers.ModelSerializer):
 class PatientDataSerializer(serializers.ModelSerializer):
     email = CustomEmailSerializerField(required=False, allow_null=True)
     doctor_id = serializers.IntegerField(required=False, allow_null=True)
+    first_name = serializers.CharField(required=True, allow_null=False)
+    last_name = serializers.CharField(required=True, allow_null=False)
     diseases = serializers.JSONField(default=list, required=False)
     display_picture = serializers.ImageField(required=False, allow_null=True)
     medical_history = serializers.JSONField(default=list, required=False)
 
     class Meta:
         model = PatientDetail
-        fields = ('email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture', 'medical_history')
+        fields = ('first_name', 'last_name', 'email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture',
+                  'medical_history')
 
 
 class PatientDataGetSerializer(serializers.ModelSerializer):
