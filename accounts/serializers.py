@@ -32,10 +32,11 @@ class PatientDataSerializer(serializers.ModelSerializer):
     doctor_id = serializers.IntegerField(required=False, allow_null=True)
     diseases = serializers.JSONField(default=list, required=False)
     display_picture = serializers.ImageField(required=False, allow_null=True)
+    medical_history = serializers.JSONField(default=list, required=False)
 
     class Meta:
         model = PatientDetail
-        fields = ('email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture')
+        fields = ('email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture', 'medical_history')
 
 
 class PatientDataGetSerializer(serializers.ModelSerializer):
