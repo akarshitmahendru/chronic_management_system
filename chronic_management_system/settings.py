@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['54.218.193.40', '127.0.0.1']
 INSTALLED_APPS = [
     # 'jet.dashboard',
     # 'jet',
-    # 'admin_interface',
-    # 'colorfield',
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/collectstatic/'
 STATIC_ROOT = os.path.join(BASE_DIR, "collectstatic/")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
