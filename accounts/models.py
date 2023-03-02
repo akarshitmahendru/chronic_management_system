@@ -22,16 +22,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['phone_number', 'first_name', 'last_name']
+    USERNAME_FIELD = 'phone_number'
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
 
     def get_jwt_token_for_user(self):
         """ get jwt token for the user """
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         payload = jwt_payload_handler(self)
-        phone_number = payload.pop('phone_number', None)
-        payload.update({'phone_number': str(phone_number)})
+        phone_number = payload.pop('phone_number')
+        username = payload.pop('username')
+        payload.update({'phone_number': str(phone_number), 'username': str(username)})
         token = jwt_encode_handler(payload)
         return token
 
