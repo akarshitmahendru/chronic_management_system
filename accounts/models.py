@@ -30,6 +30,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
         payload = jwt_payload_handler(self)
+        phone_number = payload.pop('phone_number', None)
+        payload.update({'phone_number': str(phone_number)})
         token = jwt_encode_handler(payload)
         return token
 
