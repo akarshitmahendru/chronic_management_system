@@ -37,6 +37,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.first_name} {self.last_name}"
 
     def __str__(self):
+        if self.get_full_name():
+            return self.get_full_name()
+        elif self.email:
+            return self.email
         return str(self.phone_number)
 
 
