@@ -1,7 +1,7 @@
 from django.db import models
 
 from utils.constants import PLAN_FREQUENCY, PlanEnum, PlanFrequencyEnum, PATIENT_PLAN, PLAN_STATUS, PlanStatusEnum
-
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -20,9 +20,9 @@ class Disease(models.Model):
 
 class DiseaseDefaultPlan(models.Model):
     disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
-    exercise_plan = models.TextField(null=True, blank=True)
-    diet_plan = models.TextField(null=True, blank=True)
-    medication_plan = models.TextField(null=True, blank=True)
+    exercise_plan = RichTextField(null=True, blank=True)
+    diet_plan = RichTextField(null=True, blank=True)
+    medication_plan = RichTextField(null=True, blank=True)
     priority = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,7 +38,7 @@ class PatientPersonalizedPlan(models.Model):
     magnitude = models.PositiveIntegerField(default=1)
     value = models.CharField(max_length=32, null=True, blank=True)
     plan_status = models.IntegerField(choices=PLAN_STATUS, default=PlanStatusEnum.ACTIVE.value)
-    description = models.TextField(null=True, blank=True)
+    description = RichTextField(null=True, blank=True)
     notification_heading = models.TextField(null=True, blank=True)
     notification_body = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
