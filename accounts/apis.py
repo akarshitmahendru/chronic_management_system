@@ -47,7 +47,7 @@ class PatientDataViewSet(generics.ListCreateAPIView):
         serializer = serializer(data=request.data)
         user = self.request.user
         if serializer.is_valid(raise_exception=True):
-            diseases, email, display_picture = None
+            diseases, email, display_picture = None, None, None
             if "diseases" in serializer.validated_data:
                 diseases = serializer.validated_data.pop("diseases")
             if "email" in serializer.validated_data:
