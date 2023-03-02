@@ -40,7 +40,7 @@ class PatientPersonalizedPlanAdmin(admin.ModelAdmin):
         super(PatientPersonalizedPlanAdmin, self).save_model(request, obj, form, change)
         from notifications.models import NotificationsScheduler
         scheduled_time = obj.fetch_scheduled_time()
-        if scheduled_time:
+        if scheduled_time and obj.notification_heading:
             NotificationsScheduler.objects.update_or_create(patient_plan_id=obj.id,
                                                             defaults={"scheduled_time": scheduled_time})
 
