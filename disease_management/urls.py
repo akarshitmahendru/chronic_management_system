@@ -7,6 +7,5 @@ router = DefaultRouter()
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^login/$', apis.LoginAPI.as_view(), name='login'),
-    url(r'^patient-details/$', apis.PatientDataViewSet.as_view(), name='PatientData'),
+    url(r'^diseases/$', apis.DiseaseAPI.as_view(), name='DiseaseAPI'),
 ]

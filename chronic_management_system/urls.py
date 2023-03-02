@@ -39,6 +39,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger'),
     url(r'^api/v1/', include('accounts.urls')),
+    url(r'^api/v1/', include('disease_management.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

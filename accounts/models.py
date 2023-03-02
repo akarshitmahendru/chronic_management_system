@@ -16,6 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=120, null=True)
     email = models.EmailField(max_length=254, db_index=True, unique=True, null=True)
     phone_number = PhoneNumberField(unique=True, db_index=True)
+    display_picture = models.ImageField(upload_to="display_pics", null=True)
     role = models.IntegerField(default=RoleEnum.DOCTOR.value, choices=ROLES)
     is_staff = models.BooleanField(default=False)
     objects = UserManager()
@@ -30,6 +31,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         payload = jwt_payload_handler(self)
         token = jwt_encode_handler(payload)
         return token
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class PatientDetail(models.Model):
