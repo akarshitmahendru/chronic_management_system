@@ -8,4 +8,5 @@ router = DefaultRouter()
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^diseases/$', apis.DiseaseAPI.as_view(), name='DiseaseAPI'),
+    url(r'^my_plans/$', apis.PatientPersonalizedAPI.as_view(), name='PersonalizedPlans'),
 ]

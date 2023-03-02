@@ -18,6 +18,16 @@ class Disease(models.Model):
         return self.disease_name
 
 
+class DiseaseDefaultPlan(models.Model):
+    disease = models.ForeignKey(Disease, on_delete=models.CASCADE)
+    exercise_plan = models.TextField(null=True, blank=True)
+    diet_plan = models.TextField(null=True, blank=True)
+    medication_plan = models.TextField(null=True, blank=True)
+    priority = models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 class PatientPersonalizedPlan(models.Model):
     from accounts.models import User
 
@@ -28,6 +38,9 @@ class PatientPersonalizedPlan(models.Model):
     magnitude = models.PositiveIntegerField(default=1)
     value = models.CharField(max_length=32, null=True, blank=True)
     plan_status = models.IntegerField(choices=PLAN_STATUS, default=PlanStatusEnum.ACTIVE.value)
+    description = models.TextField(null=True, blank=True)
+    notification_heading = models.TextField(null=True, blank=True)
+    notification_body = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
