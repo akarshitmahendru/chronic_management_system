@@ -1,11 +1,10 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status, response
 from disease_management.models import Disease
 from disease_management.serializers import DiseaseSerializer
 
 
 class DiseaseAPI(generics.ListAPIView):
     permission_classes = (permissions.AllowAny,)
-    serializer_class = DiseaseSerializer
     model = Disease
 
     def get_queryset(self):
@@ -15,3 +14,12 @@ class DiseaseAPI(generics.ListAPIView):
         elif chronic.lower() == "false":
             return self.model.objects.filter(is_chronic=False)
         return self.model.objects.all()
+
+    def get_serializer_class(self):
+        return DiseaseSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer_class()
+        serializer_data = serializer(queryset, many=True)
+        return response.Response(data={"result": serializer_data.data}, status=status.HTTP_200_OK)

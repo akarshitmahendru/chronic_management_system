@@ -80,6 +80,12 @@ class DoctorAPI(generics.ListAPIView):
     def get_queryset(self):
         return User.objects.filter(role=RoleEnum.DOCTOR.value)
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer_class()
+        serializer_data = serializer(queryset, many=True)
+        return response.Response(data={"result": serializer_data.data}, status=status.HTTP_200_OK)
+
 
 class PatientMedicalHistoryView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
