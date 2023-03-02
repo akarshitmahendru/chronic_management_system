@@ -32,7 +32,7 @@ class PatientDataSerializer(serializers.ModelSerializer):
     doctor_id = serializers.IntegerField(required=False, allow_null=True)
     first_name = serializers.CharField(required=True, allow_null=False)
     last_name = serializers.CharField(required=True, allow_null=False)
-    diseases = serializers.JSONField(default=list, required=False)
+    diseases = serializers.JSONField(required=False, allow_null=True)
     display_picture = serializers.ImageField(required=False, allow_null=True)
     medical_history = serializers.JSONField(default=list, required=False)
 

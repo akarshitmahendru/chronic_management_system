@@ -73,7 +73,7 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 patient_detail = self.model.objects.create(**serializer.validated_data)
             if diseases:
                 patient_detail.diseases.set(diseases)
-            if email or display_picture or first_name or last_name :
+            if email or display_picture or first_name or last_name:
                 user.save(update_fields=['email', 'display_picture', 'first_name', 'last_name'])
             if medical_history:
                 for obj in medical_history:
