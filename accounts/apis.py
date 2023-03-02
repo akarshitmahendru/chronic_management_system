@@ -27,7 +27,7 @@ class LoginAPI(views.APIView):
             response_dict = dict()
             response_dict['user_id'] = user.id
             response_dict['phone_number'] = str(user.phone_number)
-            response_dict['auth-token'] = user.get_jwt_token_for_user()
+            response_dict['auth_token'] = user.get_jwt_token_for_user()
             response_dict['is_new_user'] = is_new_user
             return response.Response(response_dict, status=status.HTTP_200_OK)
         else:
