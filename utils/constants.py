@@ -86,3 +86,16 @@ PLAN_STATUS = (
     (2, 'Pause Reminders'),
     (3, 'Inactive')
 )
+
+
+class NotificationStatusEnum(ChronicToolEnum):
+    READ = 1
+    IGNORED = 2
+    NO_ACTION = 3
+
+
+NOTIFICATION_STATUS = (
+    (1, 'Read'),
+    (2, 'Ignored'),
+    (3, 'No Action')
+)
