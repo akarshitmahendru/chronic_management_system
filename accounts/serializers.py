@@ -1,6 +1,8 @@
 from rest_framework import serializers
+
+from utils.constants import PATIENT_ATTRIBUTES
 from utils.fields import PhoneNumberField, CustomEmailSerializerField
-from accounts.models import PatientDetail, User
+from accounts.models import PatientDetail, User, PatientMedicalHistory
 
 
 class LoginSerializer(serializers.Serializer):
@@ -25,7 +27,7 @@ class PatientDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PatientDetail
-        fields = ('email', 'weight', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture')
+        fields = ('email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture')
 
 
 class PatientDataGetSerializer(serializers.ModelSerializer):
@@ -61,8 +63,14 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PatientDetail
-        fields = ("patient_id", "full_name", "email", "phone_number", "display_picture", "weight", "sex", "dob",
-                  "diseases", "doctor_details")
+        fields = ("patient_id", "full_name", "email", "phone_number", "display_picture", "sex", "dob", "diseases",
+                  "doctor_details")
 
 
+class PatientMedicalHistorySerializer(serializers.ModelSerializer):
+    attribute = serializers.ChoiceField(choices=PATIENT_ATTRIBUTES, required=True, allow_null=False)
+    value = serializers.CharField(required=True, allow_null=False)
 
+    class Meta:
+        model = PatientMedicalHistory
+        fields = ("attribute", "value")

@@ -4,7 +4,7 @@ from django.db import models
 from rest_framework_jwt.settings import api_settings
 from accounts.entities.model_managers import UserManager
 from phonenumber_field.modelfields import PhoneNumberField
-from utils.constants import RoleEnum, ROLES, SexEnum, SEX
+from utils.constants import RoleEnum, ROLES, SexEnum, SEX, PATIENT_ATTRIBUTES
 from django.contrib.auth.models import PermissionsMixin
 
 
@@ -42,12 +42,22 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class PatientDetail(models.Model):
     patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="patient_detail")
-    weight = models.FloatField(default=0)
     dob = models.DateField(null=True, blank=True)
     sex = models.IntegerField(choices=SEX, default=SexEnum.MALE.value)
     diseases = models.ManyToManyField('disease_management.Disease', blank=True)
     doctor = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="provider")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class PatientMedicalHistory(models.Model):
+    patient = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient_history")
+    attribute = models.IntegerField(choices=PATIENT_ATTRIBUTES, null=True)
+    value = models.CharField(max_length=32, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+
 
 

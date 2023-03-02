@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from accounts.models import User, PatientDetail
+from accounts.models import User, PatientDetail, PatientMedicalHistory
 # Register your models here.
 
 
@@ -14,7 +14,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(PatientDetail)
 class PatientDetailAdmin(admin.ModelAdmin):
-    list_display = ('patient_name', 'patient_contact_information', 'doctor_name', 'weight', 'dob', 'sex')
+    list_display = ('patient_name', 'patient_contact_information', 'doctor_name', 'dob', 'sex')
     search_fields = ('patient__first_name', 'patient__last_name', 'patient__email', 'patient__phone_number',
                      'doctor__first_name', 'doctor__last_name', 'doctor__email', 'doctor__phone_number')
     autocomplete_fields = ('diseases', 'patient', 'doctor')
@@ -30,5 +30,13 @@ class PatientDetailAdmin(admin.ModelAdmin):
     def patient_contact_information(self, obj):
         email_str = 'Email&nbsp;Address&nbsp;:&nbsp;' + str(obj.patient.email) + '<br/>'
         phone_str = 'Phone&nbsp;Number&nbsp;:&nbsp;' + str(obj.patient.phone_number) + '<br/>'
-        lead_details_str = email_str + phone_str
-        return mark_safe(lead_details_str)
+        details_str = email_str + phone_str
+        return mark_safe(details_str)
+
+
+@admin.register(PatientMedicalHistory)
+class PatientMedicalHistoryAdmin(admin.ModelAdmin):
+    list_display = ('patient_name', 'attribute', 'value')
+
+    def patient_name(self, obj):
+        return f"{obj.patient.first_name} {obj.patient.last_name}"

@@ -1,7 +1,8 @@
 from rest_framework import views, permissions, response, status, generics
-from accounts.models import User, PatientDetail
+from accounts.models import User, PatientDetail, PatientMedicalHistory
 from drf_yasg.utils import swagger_auto_schema
-from accounts.serializers import LoginSerializer, PatientDataSerializer, PatientDataGetSerializer, DoctorSerializer
+from accounts.serializers import LoginSerializer, PatientDataSerializer, PatientDataGetSerializer, DoctorSerializer, \
+    PatientMedicalHistorySerializer
 from utils.constants import RoleEnum
 
 
@@ -78,3 +79,21 @@ class DoctorAPI(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(role=RoleEnum.DOCTOR.value)
+
+
+class PatientMedicalHistoryView(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = PatientMedicalHistorySerializer
+    model = PatientMedicalHistory
+
+    def get_queryset(self):
+        return self.model.objects.filter(patient_id=self.request.user.id)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            self.model.objects.update_or_create(patient_id=self.request.user.id, defaults={
+                "attribute": serializer.validated_data['attribute'], "value": serializer.validated_data['value']}
+                                                )
+            return response.Response({"msg": "Medical History successfully updated"}, status=status.HTTP_200_OK)
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
