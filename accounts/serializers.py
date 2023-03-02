@@ -13,7 +13,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 class DoctorSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'display_picture')
@@ -55,10 +54,10 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
 
     def get_doctor_details(self, obj):
         if obj.doctor:
-            return {"full_name": f"{obj.doctor.get_full_name()}", "email": obj.doctor.email,
-                    "display_picture": obj.doctor.display_picture if obj.doctor.display_picture else None,
-                    "phone_number": str(obj.doctor.phone_number)}
-        return {}
+            return [{"full_name": f"{obj.doctor.get_full_name()}", "email": obj.doctor.email,
+                     "display_picture": obj.doctor.display_picture if obj.doctor.display_picture else None,
+                     "phone_number": str(obj.doctor.phone_number)}]
+        return []
 
     def get_full_name(self, obj):
         return obj.patient.get_full_name()
@@ -75,8 +74,12 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
         return None
 
     def get_medical_history(self, obj):
+        data = []
         qs = PatientMedicalHistory.objects.filter(patient_id=obj.patient_id).first()
-        return PatientMedicalHistorySerializer(instance=qs, many=False).data
+        result = PatientMedicalHistorySerializer(instance=qs, many=False).data
+        if not result:
+            return data
+        return data.append(result)
 
     class Meta:
         model = PatientDetail
