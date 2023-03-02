@@ -45,7 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class PatientDetail(models.Model):
-    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="patient_detail")
+    patient = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient_detail")
     dob = models.DateField(null=True, blank=True)
     sex = models.IntegerField(choices=SEX, default=SexEnum.MALE.value)
     diseases = models.ManyToManyField('disease_management.Disease', blank=True)
