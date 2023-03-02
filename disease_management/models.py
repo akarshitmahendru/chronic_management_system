@@ -63,8 +63,9 @@ class PatientPersonalizedPlan(models.Model):
             return time_now + datetime.timedelta(minutes=self.magnitude)
         elif self.frequency == PlanFrequencyEnum.HOURS.value:
             return time_now + datetime.timedelta(hours=self.magnitude)
-        else:
+        elif self.frequency == PlanFrequencyEnum.DAY.value:
             return time_now + datetime.timedelta(days=self.magnitude)
+        return None
 
 
 

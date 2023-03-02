@@ -26,8 +26,8 @@ class PatientSuccessRate(models.Model):
 
 class NotificationsScheduler(models.Model):
     patient_plan = models.OneToOneField(PatientPersonalizedPlan, on_delete=models.CASCADE)
-    is_triggered = models.BooleanField(default=False)
     scheduled_time = models.DateTimeField()
+    last_triggered_on = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
