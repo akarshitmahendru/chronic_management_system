@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'disease_management',
-    'notifications'
+    'notifications',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
