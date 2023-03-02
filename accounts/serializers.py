@@ -19,6 +19,15 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'display_picture')
 
 
+class PatientMedicalHistorySerializer(serializers.ModelSerializer):
+    attribute = serializers.ChoiceField(choices=PATIENT_ATTRIBUTES, required=True, allow_null=False)
+    value = serializers.CharField(required=True, allow_null=False)
+
+    class Meta:
+        model = PatientMedicalHistory
+        fields = ("attribute", "value")
+
+
 class PatientDataSerializer(serializers.ModelSerializer):
     email = CustomEmailSerializerField(required=False, allow_null=True)
     doctor_id = serializers.IntegerField(required=False, allow_null=True)
@@ -37,6 +46,7 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
     display_picture = serializers.SerializerMethodField()
     diseases = serializers.SerializerMethodField()
     doctor_details = serializers.SerializerMethodField()
+    medical_history = serializers.SerializerMethodField()
 
     def get_diseases(self, obj):
         from disease_management.serializers import DiseaseSerializer
@@ -64,16 +74,11 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
             return obj.patient.display_picture
         return None
 
+    def get_medical_history(self, obj):
+        qs = PatientMedicalHistory.objects.filter(patient_id=obj.patient_id).first()
+        return PatientMedicalHistorySerializer(data=qs, many=False).data
+
     class Meta:
         model = PatientDetail
         fields = ("patient_id", "full_name", "email", "phone_number", "display_picture", "sex", "dob", "diseases",
-                  "doctor_details")
-
-
-class PatientMedicalHistorySerializer(serializers.ModelSerializer):
-    attribute = serializers.ChoiceField(choices=PATIENT_ATTRIBUTES, required=True, allow_null=False)
-    value = serializers.CharField(required=True, allow_null=False)
-
-    class Meta:
-        model = PatientMedicalHistory
-        fields = ("attribute", "value")
+                  "doctor_details", "medical_history")
