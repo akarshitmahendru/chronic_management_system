@@ -46,6 +46,7 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
     diseases = serializers.SerializerMethodField()
     doctor_details = serializers.SerializerMethodField()
     medical_history = serializers.SerializerMethodField()
+    is_personalized_plan_added = serializers.SerializerMethodField()
 
     def get_diseases(self, obj):
         from disease_management.serializers import DiseaseSerializer
@@ -78,7 +79,13 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
         result = PatientMedicalHistorySerializer(instance=qs, many=True).data
         return result
 
+    def get_is_personalized_plan_added(self, obj):
+        from disease_management.models import PatientPersonalizedPlan
+        if PatientPersonalizedPlan.objects.filter(patient_id=obj.patient_id).exists():
+            return True
+        return False
+
     class Meta:
         model = PatientDetail
         fields = ("patient_id", "full_name", "email", "phone_number", "display_picture", "sex", "dob", "diseases",
-                  "doctor_details", "medical_history")
+                  "doctor_details", "medical_history", "is_personalized_plan_added")

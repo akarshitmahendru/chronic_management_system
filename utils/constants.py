@@ -66,12 +66,16 @@ class PlanEnum(ChronicToolEnum):
     MEDICATIONS = 1
     DIET = 2
     EXERCISE = 3
+    MONITORING = 4
+    OTHERS = 5
 
 
 PATIENT_PLAN = (
     (1, 'Medications'),
     (2, 'Diet'),
-    (3, 'Exercise')
+    (3, 'Exercise'),
+    (4, 'Monitoring'),
+    (5, 'Others')
 )
 
 

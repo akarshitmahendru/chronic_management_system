@@ -37,7 +37,7 @@ class PatientPersonalizedAPI(views.APIView):
         result = []
         if not PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
             result = list(self.default_plan_model.objects.filter(disease_id__in=user_diseases).order_by(
-                "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan"))
+                "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan", "monitoring"))
         elif PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
             plans = PatientPersonalizedPlan.objects.filter(patient_id=user.id)
             result = []
@@ -49,6 +49,10 @@ class PatientPersonalizedAPI(views.APIView):
                     resp['exercise_plan'] = plan_obj.description
                 elif plan_obj.plan == PlanEnum.DIET.value:
                     resp['diet_plan'] = plan_obj.description
+                elif plan_obj.plan == PlanEnum.MONITORING.value:
+                    resp['monitoring'] = plan_obj.description
+                elif plan_obj.plan == PlanEnum.OTHERS.value:
+                    resp['others'] = plan_obj.description
                 if resp:
                     result.append(resp)
         return response.Response({"plan": result}, status=status.HTTP_200_OK)

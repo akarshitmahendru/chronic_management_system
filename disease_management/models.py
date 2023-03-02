@@ -26,6 +26,7 @@ class DiseaseDefaultPlan(models.Model):
     exercise_plan = RichTextField(null=True, blank=True)
     diet_plan = RichTextField(null=True, blank=True)
     medication_plan = RichTextField(null=True, blank=True)
+    monitoring = RichTextField(null=True, blank=True)
     priority = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
