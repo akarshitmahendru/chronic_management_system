@@ -16,8 +16,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=120, null=True)
     email = models.EmailField(max_length=254, db_index=True, unique=True, null=True)
     phone_number = PhoneNumberField(unique=True, db_index=True)
-    display_picture = models.ImageField(upload_to="display_pics", null=True)
+    display_picture = models.ImageField(upload_to="display_pics", null=True, blank=True)
     role = models.IntegerField(default=RoleEnum.DOCTOR.value, choices=ROLES)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     objects = UserManager()
 
