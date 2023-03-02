@@ -35,6 +35,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
 
+    def __str__(self):
+        return str(self.phone_number)
+
 
 class PatientDetail(models.Model):
     patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="patient_detail")
