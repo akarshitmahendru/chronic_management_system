@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from utils.fields import PhoneNumberField, CustomEmailSerializerField
-from accounts.models import PatientDetail
+from accounts.models import PatientDetail, User
 
 
 class LoginSerializer(serializers.Serializer):
@@ -8,6 +8,13 @@ class LoginSerializer(serializers.Serializer):
         allow_null=False,
         required=True
     )
+
+
+class DoctorSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'email', 'phone_number', 'display_picture')
 
 
 class PatientDataSerializer(serializers.ModelSerializer):

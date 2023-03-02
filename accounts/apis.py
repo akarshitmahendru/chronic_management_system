@@ -1,7 +1,8 @@
 from rest_framework import views, permissions, response, status, generics
 from accounts.models import User, PatientDetail
 from drf_yasg.utils import swagger_auto_schema
-from accounts.serializers import LoginSerializer, PatientDataSerializer, PatientDataGetSerializer
+from accounts.serializers import LoginSerializer, PatientDataSerializer, PatientDataGetSerializer, DoctorSerializer
+from utils.constants import RoleEnum
 
 
 class LoginAPI(views.APIView):
@@ -66,3 +67,10 @@ class PatientDataViewSet(generics.ListCreateAPIView):
         else:
             return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class DoctorAPI(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = DoctorSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(role=RoleEnum.DOCTOR.value)
