@@ -18,7 +18,8 @@ class LoginAPI(views.APIView):
             user = User.objects.filter(phone_number=serializer.validated_data['phone_number']).first()
             if not user:
                 user = User.objects.create(
-                    phone_number=serializer.validated_data['phone_number']
+                    phone_number=serializer.validated_data['phone_number'],
+                    role=RoleEnum.PATIENT.value
                 )
             response_dict = dict()
             response_dict['user_id'] = user.id
