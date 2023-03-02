@@ -32,3 +32,19 @@ class SexEnum(ChronicToolEnum):
     MALE = 1
     FEMALE = 2
     OTHER = 3
+
+
+PATIENT_ATTRIBUTES = (
+    (1, 'Blood Pressure'),
+    (2, 'Heart Rate'),
+    (3, 'Blood Sugar Level'),
+    (4, 'Weight')
+)
+
+
+class PatientAttributes(ChronicToolEnum):
+    BP = 1
+    HEAR_RATE = 2
+    SUGAR_LEVEL = 3
+    WEIGHT = 4
+
