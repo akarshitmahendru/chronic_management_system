@@ -55,7 +55,7 @@ class PatientDetail(models.Model):
 
 
 class PatientMedicalHistory(models.Model):
-    patient = models.OneToOneField(User, on_delete=models.CASCADE, related_name="patient_history")
+    patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name="patient_history")
     attribute = models.IntegerField(choices=PATIENT_ATTRIBUTES, null=True)
     value = models.CharField(max_length=32, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
