@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'accounts',
     'disease_management',
     'notifications',
+    'content',
     'django_celery_results',
 ]
 

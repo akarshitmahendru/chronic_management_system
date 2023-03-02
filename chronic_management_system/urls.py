@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^api/v1/', include('accounts.urls')),
     url(r'^api/v1/', include('disease_management.urls')),
     url(r'^api/v1/', include('notifications.urls')),
+    url(r'^api/v1/', include('content.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
