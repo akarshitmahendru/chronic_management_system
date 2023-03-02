@@ -98,8 +98,9 @@ class PatientMedicalHistoryView(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            self.model.objects.update_or_create(patient_id=self.request.user.id, defaults={
-                "attribute": serializer.validated_data['attribute'], "value": serializer.validated_data['value']}
+            self.model.objects.update_or_create(patient_id=self.request.user.id,
+                                                attribute=serializer.validated_data['attribute'],
+                                                defaults={"value": serializer.validated_data['value']}
                                                 )
             return response.Response({"msg": "Medical History successfully updated"}, status=status.HTTP_200_OK)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
