@@ -4,7 +4,7 @@ from disease_management.serializers import DiseaseSerializer
 
 
 class DiseaseAPI(generics.ListAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     serializer_class = DiseaseSerializer
     model = Disease
 

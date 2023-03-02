@@ -48,3 +48,39 @@ class PatientAttributes(ChronicToolEnum):
     SUGAR_LEVEL = 3
     WEIGHT = 4
 
+
+PLAN_FREQUENCY = (
+    (1, 'Day'),
+    (2, 'Hours')
+)
+
+
+class PlanFrequencyEnum(ChronicToolEnum):
+    DAY = 1
+    HOURS = 2
+
+
+class PlanEnum(ChronicToolEnum):
+    MEDICATIONS = 1
+    DIET = 2
+    EXERCISE = 3
+
+
+PATIENT_PLAN = (
+    (1, 'Medications'),
+    (2, 'Diet'),
+    (3, 'Exercise')
+)
+
+
+class PlanStatusEnum(ChronicToolEnum):
+    ACTIVE = 1
+    PAUSE_REMINDERS = 2
+    INACTIVE = 3
+
+
+PLAN_STATUS = (
+    (1, 'Active'),
+    (2, 'Pause Reminders'),
+    (3, 'Inactive')
+)
