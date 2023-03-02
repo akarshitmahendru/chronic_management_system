@@ -46,7 +46,8 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
     def get_doctor_details(self, obj):
         if obj.doctor:
             return {"full_name": f"{obj.doctor.get_full_name()}", "email": obj.doctor.email,
-                    "display_picture": obj.doctor.display_picture, "phone_number": str(obj.doctor.phone_number)}
+                    "display_picture": obj.doctor.display_picture if obj.doctor.display_picture else None,
+                    "phone_number": str(obj.doctor.phone_number)}
         return {}
 
     def get_full_name(self, obj):
@@ -59,7 +60,9 @@ class PatientDataGetSerializer(serializers.ModelSerializer):
         return str(obj.patient.phone_number)
 
     def get_display_picture(self, obj):
-        return obj.patient.display_picture
+        if obj.patient.display_picture:
+            return obj.patient.display_picture
+        return None
 
     class Meta:
         model = PatientDetail
