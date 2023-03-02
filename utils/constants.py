@@ -38,7 +38,8 @@ PATIENT_ATTRIBUTES = (
     (1, 'Blood Pressure'),
     (2, 'Heart Rate'),
     (3, 'Blood Sugar Level'),
-    (4, 'Weight')
+    (4, 'Weight'),
+    (5, 'Height')
 )
 
 
@@ -47,6 +48,7 @@ class PatientAttributes(ChronicToolEnum):
     HEAR_RATE = 2
     SUGAR_LEVEL = 3
     WEIGHT = 4
+    HEIGHT = 5
 
 
 PLAN_FREQUENCY = (
