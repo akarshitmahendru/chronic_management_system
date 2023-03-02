@@ -51,6 +51,7 @@ class PatientDataViewSet(generics.ListCreateAPIView):
         serializer = serializer(data=request.data)
         user = self.request.user
         if serializer.is_valid(raise_exception=True):
+            medical_history = []
             diseases, email, display_picture = None, None, None
             if "diseases" in serializer.validated_data:
                 diseases = serializer.validated_data.pop("diseases")
@@ -58,6 +59,8 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 user.email = serializer.validated_data.pop("email")
             if "display_picture" in serializer.validated_data:
                 user.display_picture = serializer.validated_data.pop("display_picture")
+            if "medical_history" in serializer.validated_data:
+                medical_history = serializer.validated_data.pop("medical_history")
             patient_detail = self.model.objects.filter(patient_id=self.request.user.id).first()
             if patient_detail:
                 self.model.objects.filter(patient_id=self.request.user.id).update(**serializer.validated_data)
@@ -68,6 +71,11 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 patient_detail.diseases.set(diseases)
             if email or display_picture:
                 user.save(update_fields=['email', 'display_picture'])
+
+            if medical_history:
+                for obj in medical_history:
+                    self.model.objects.update_or_create(patient_id=user.id, attribute=obj['attribute'],
+                                                        defaults={"value": obj['value']})
             return response.Response({"msg": "Patient Details successfully updated"}, status=status.HTTP_200_OK)
         else:
             return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -13,6 +13,12 @@ class NotificationAPI(generics.ListAPIView):
     def get_queryset(self):
         return self.model.objects.filter(user_id=self.request.user.id)
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer_class()
+        serializer_data = serializer(queryset, many=True)
+        return response.Response(data={"result": serializer_data.data}, status=status.HTTP_200_OK)
+
 
 class OpenNotificationView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
