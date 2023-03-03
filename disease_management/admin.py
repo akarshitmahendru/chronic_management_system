@@ -39,14 +39,17 @@ class PatientPersonalizedPlanAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        from notifications.models import NotificationsScheduler
-
+        from notifications.models import NotificationsScheduler, Notification
+        data = {}
         if not obj.id:
             data = {"title": f"New {obj.get_plan_display()} has been added.",
                     "body": f"Check the plan suggested by your doctor to boost your health.",
                     "notification_id": "0"}
             FireBaseActions.send_message(user_tokens=[obj.patient.fcm_token], data=data)
         super(PatientPersonalizedPlanAdmin, self).save_model(request, obj, form, change)
+        if data:
+            Notification.objects.create(user_id=obj.patient_id, patient_plan_id=obj.id,
+                                        notification_title=data['title'], notification_body=data['body'])
         scheduled_time = obj.fetch_scheduled_time()
         if scheduled_time and obj.notification_heading:
             NotificationsScheduler.objects.update_or_create(patient_plan_id=obj.id,

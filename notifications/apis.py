@@ -11,7 +11,7 @@ class NotificationAPI(generics.ListAPIView):
     model = Notification
 
     def get_queryset(self):
-        return self.model.objects.filter(user_id=self.request.user.id)
+        return self.model.objects.filter(user_id=self.request.user.id).exclude(action=NotificationStatusEnum.READ.value)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
