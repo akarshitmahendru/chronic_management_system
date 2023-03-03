@@ -39,7 +39,7 @@ class PatientDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientDetail
         fields = ('first_name', 'last_name', 'email', 'dob', 'sex', 'doctor_id', 'diseases', 'display_picture',
-                  'medical_history')
+                  'medical_history', 'fcm_token')
 
 
 class PatientDataGetSerializer(serializers.ModelSerializer):

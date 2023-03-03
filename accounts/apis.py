@@ -52,7 +52,7 @@ class PatientDataViewSet(generics.ListCreateAPIView):
         user = self.request.user
         if serializer.is_valid(raise_exception=True):
             medical_history = []
-            diseases, email, display_picture, first_name, last_name = None, None, None, None, None
+            diseases, email, display_picture, first_name, last_name, fcm_token = None, None, None, None, None, None
             if "diseases" in serializer.validated_data:
                 diseases = serializer.validated_data.pop("diseases")
             if "email" in serializer.validated_data:
@@ -65,6 +65,8 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 user.first_name = serializer.validated_data.pop("first_name")
             if "last_name" in serializer.validated_data:
                 user.last_name = serializer.validated_data.pop("last_name")
+            if "fcm_token" in serializer.validated_data:
+                user.fcm_token = serializer.validated_data.pop("fcm_token")
             patient_detail = self.model.objects.filter(patient_id=self.request.user.id).first()
             if patient_detail:
                 self.model.objects.filter(patient_id=self.request.user.id).update(**serializer.validated_data)
@@ -73,8 +75,8 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 patient_detail = self.model.objects.create(**serializer.validated_data)
             if diseases:
                 patient_detail.diseases.set(diseases)
-            if email or display_picture or first_name or last_name:
-                user.save(update_fields=['email', 'display_picture', 'first_name', 'last_name'])
+            if email or display_picture or first_name or last_name or fcm_token:
+                user.save(update_fields=['email', 'display_picture', 'first_name', 'last_name', 'fcm_token'])
             if medical_history:
                 for obj in medical_history:
                     self.model.objects.update_or_create(patient_id=user.id, attribute=obj['attribute'],
