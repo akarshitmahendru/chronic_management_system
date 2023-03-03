@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "doctus-hcc",
+  "private_key_id": "e2c851d488c989416604dbb5daa58165fed89cae",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2S+V88F/e4xr3\njPo7k5sLJijOVc9kvUcVgPgMJMTOCdkJOOB+TAjBexD6cz6xhvfKw9l/Enpotox9\niT+FOgv5/VeRqrt/q/OnFTwyeQUFO5GFnvzdfZetHljZEAOvAjiprLYVZj0onO51\nEObc6qzk1r/xZR2Wrvmfjs6BF6OepiNkorww+OXBdUCPzR7j7ZJKnXsod+Ueyi1T\nsdQzTjD1PG2aLXZLAN4wjLwkF2ZeC8dqKv5hd2S0wuccygax+1f+l45QRJamMJNL\ncB6LSSYlpFtUSpqPxklZaN6EqzUBJXUDHF/lGg2K79JbPDaSJak76cNIdm/935Xa\nWOUNfWDBAgMBAAECggEAGeCGMAkTItmMH23Uq5ZVYOzGyBtoOD2iFIxdKaQih7jg\nJS38uBDlAUoN6+9mC99D13Wbry0ZUTnwkXVlHe1Se+cZgiUBPqtTB/m8tNF3A/oj\nuxsJfAty93EiXZWnYDVpg7RvmHQN5HD6bIW8r8lkR4uwbXzUCWrHJn4oFC0d3cws\nR8/RcVPnjlPGVNZ89l5bWXOeLCg8oMFFoWqF0DMgvsS0KioFNzhCMjhNzMIuwQGI\nOfJzqSYSF2plad2i57+/BEfBuxrG6N2KKEfK+63eMszV3Jxo9chTf9hD25c+OEim\nKUMFfDmGr60eUnRfAuzvVm0/WBK1MqkDjhCb3Elz3QKBgQDewQr2+h61Pmet/Aqz\nk3EOsxieYGsylpA2LOwa0HMZy5mJrqiSp5gDQiVcL5IHI/PiRV8eBgQrP8lQBXtj\nqTeEnW/RMWkAMHKJ41mlTe77dEqiQM+jYL/iQwtb6QCrS74bfVeU2Iez4/TOlVgW\nGCYq4wJbKk5JJNw9il1QZsfTvwKBgQDRgQ4XPc4HnSGIUtl1D0mWAbY9dVjDWIpc\nyLYrkOUi1UgADApQRdXXstBF3cql8WkRGrTFpfLftRQYQNulOZ52c1LGz4lyM3dz\n0tvodFZYWrICkHy2BAi02ToMM7pWpfEz4V8C0kK+OZoRoFZldL5Z50sjZYJ1WLDX\nDuXtEcXrfwKBgHZoXUC94hbr7kcA5Ftis8VhlGOT00fX2x7BMFxsk9KRdLNIYZlb\ndyW8QonHS7N5/Ak6YP5fqlWnGYbs8xMd/0ICQk8MGcmc9zWu4ZdKXw/RWF75XqZ1\nJmrKwr3/lHh50bthHG4lz7TjJt2ta16LRbakZzs4uNaOvngEFehISk6XAoGBALw4\nZO9ugG6Itfqi7Gll3aeeTBs1FRUTs+MeE8RaPfIoibI5Hv71buSF6uYKGCk0FT/f\nrW8w414mcjJD+tGbTYl/nGuvQv3NzVDKrPVPp89jVDBHnTNttmC8FJGn245DMct5\nfAGt43bBi3Cwi05FL0rYKMJZTXadwurDoMB3SkiDAoGAEICcp2kd5QemkUB4PWWd\npJE/YwGPoidgwLW2hGEFcLh3DoWETAdOiT2dQmTm/PvbLDJcrID4Jyj6oD6c2ZJn\nXeWAwaQh9eCsLv9wFRJ6FfpUIjMjfMG3qSR5f3W4a5N75RpDaiResnJ9jEWbJT2N\nh4m+xAnwbGiS89tA//Nktwc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-g7ag5@doctus-hcc.iam.gserviceaccount.com",
+  "client_id": "111383178687011090034",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-g7ag5%40doctus-hcc.iam.gserviceaccount.com"
+}

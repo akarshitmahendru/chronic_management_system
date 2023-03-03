@@ -20,6 +20,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.IntegerField(default=RoleEnum.DOCTOR.value, choices=ROLES)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    fcm_token = models.CharField(max_length=600, null=True, blank=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'phone_number'

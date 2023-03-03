@@ -17,3 +17,4 @@ class KnowledgeBase(models.Model):
         if not self.image_link or not self.video_link:
             return ValidationError(f"Please mention either of video or image link")
         return self
+

@@ -12,9 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import datetime
 import os
 from celery.schedules import crontab
+from firebase_admin import initialize_app
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+current_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -220,3 +222,6 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute=5)
     }
 }
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = f"{current_dir}/google_service.json"
+FIREBASE_APP = initialize_app()

@@ -55,7 +55,7 @@ class PatientPersonalizedAPI(views.APIView):
                     resp['others'] = plan_obj.description
                 if resp:
                     result.append(resp)
-        return response.Response({"plan": result}, status=status.HTTP_200_OK)
+        return response.Response(result, status=status.HTTP_200_OK)
 
 
 
