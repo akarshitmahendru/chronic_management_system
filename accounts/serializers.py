@@ -35,6 +35,7 @@ class PatientDataSerializer(serializers.ModelSerializer):
     diseases = serializers.JSONField(required=False, allow_null=True)
     display_picture = serializers.ImageField(required=False, allow_null=True)
     medical_history = serializers.JSONField(default=list, required=False)
+    fcm_token = serializers.CharField(required=False, allow_null=True)
 
     class Meta:
         model = PatientDetail
