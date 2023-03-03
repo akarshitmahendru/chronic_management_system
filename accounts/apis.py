@@ -39,7 +39,7 @@ class PatientDataViewSet(generics.ListCreateAPIView):
     model = PatientDetail
 
     def get_queryset(self):
-        return self.model.objects.filter(patient_id=self.request.user.id)
+        return self.model.objects.filter(patient_id=self.request.user.id).first()
 
     def get_serializer_class(self):
         if self.request.method == "POST":
