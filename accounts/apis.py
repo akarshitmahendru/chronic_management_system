@@ -79,8 +79,8 @@ class PatientDataViewSet(generics.ListCreateAPIView):
                 user.save(update_fields=['email', 'display_picture', 'first_name', 'last_name', 'fcm_token'])
             if medical_history:
                 for obj in medical_history:
-                    self.model.objects.update_or_create(patient_id=user.id, attribute=obj['attribute'],
-                                                        defaults={"value": obj['value']})
+                    PatientMedicalHistory.objects.update_or_create(patient_id=user.id, attribute=obj['attribute'],
+                                                                   defaults={"value": obj['value']})
             return response.Response({"msg": "Patient Details successfully updated"}, status=status.HTTP_200_OK)
         else:
             return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
