@@ -36,25 +36,23 @@ class PatientPersonalizedAPI(views.APIView):
         user_diseases = list(user.patient_detail.diseases.values_list("id", flat=True))
         result = []
         if not PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
-            result = list(self.default_plan_model.objects.filter(disease_id__in=user_diseases).order_by(
-                "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan", "monitoring"))
+            result = self.default_plan_model.objects.filter(disease_id__in=user_diseases).order_by(
+                "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan", "monitoring").first()
         elif PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
             plans = PatientPersonalizedPlan.objects.filter(patient_id=user.id)
-            result = []
+            result = {}
             for plan_obj in plans:
-                resp = {}
-                if plan_obj.plan == PlanEnum.MEDICATIONS.value:
-                    resp['medication_plan'] = plan_obj.description
-                elif plan_obj.plan == PlanEnum.EXERCISE.value:
-                    resp['exercise_plan'] = plan_obj.description
-                elif plan_obj.plan == PlanEnum.DIET.value:
-                    resp['diet_plan'] = plan_obj.description
-                elif plan_obj.plan == PlanEnum.MONITORING.value:
-                    resp['monitoring'] = plan_obj.description
-                elif plan_obj.plan == PlanEnum.OTHERS.value:
-                    resp['others'] = plan_obj.description
-                if resp:
-                    result.append(resp)
+                if plan_obj.plan == PlanEnum.MEDICATIONS.value and not result.get("medication_plan"):
+                    result['medication_plan'] = plan_obj.description
+                elif plan_obj.plan == PlanEnum.EXERCISE.value and not result.get("exercise_plan"):
+                    result['exercise_plan'] = plan_obj.description
+                elif plan_obj.plan == PlanEnum.DIET.value and not result.get("diet_plan"):
+                    result['diet_plan'] = plan_obj.description
+                elif plan_obj.plan == PlanEnum.MONITORING.value and not result.get("monitoring"):
+                    result['monitoring'] = plan_obj.description
+                if result.get("medication_plan") and result.get("exercise_plan") and \
+                        result.get("diet_plan") and result.get("monitoring"):
+                    break
         return response.Response(result, status=status.HTTP_200_OK)
 
 
