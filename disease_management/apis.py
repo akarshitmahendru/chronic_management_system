@@ -34,12 +34,11 @@ class PatientPersonalizedAPI(views.APIView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         user_diseases = list(user.patient_detail.diseases.values_list("id", flat=True))
-        result = []
-        if not PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
+        if not PatientPersonalizedPlan.objects.filter(patient_id=user.id, description__isnull=False).exclude(
+                description="").exists():
             result = self.default_plan_model.objects.filter(disease_id__in=user_diseases).order_by(
                 "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan", "monitoring").first()
-        elif PatientPersonalizedPlan.objects.filter(patient_id=user.id, description__isnull=False).exclude(
-                description="").exists():
+        else:
             plans = PatientPersonalizedPlan.objects.filter(patient_id=user.id)
             result = {}
             for plan_obj in plans:
