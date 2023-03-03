@@ -30,8 +30,8 @@ class PatientMedicalHistorySerializer(serializers.ModelSerializer):
 class PatientDataSerializer(serializers.ModelSerializer):
     email = CustomEmailSerializerField(required=False, allow_null=True)
     doctor_id = serializers.IntegerField(required=False, allow_null=True)
-    first_name = serializers.CharField(required=True, allow_null=False)
-    last_name = serializers.CharField(required=True, allow_null=False)
+    first_name = serializers.CharField(required=False, allow_null=True)
+    last_name = serializers.CharField(required=False, allow_null=True)
     diseases = serializers.JSONField(required=False, allow_null=True)
     display_picture = serializers.ImageField(required=False, allow_null=True)
     medical_history = serializers.JSONField(default=list, required=False)
