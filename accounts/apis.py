@@ -46,6 +46,14 @@ class PatientDataViewSet(generics.ListCreateAPIView):
             return PatientDataSerializer
         return PatientDataGetSerializer
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset()).first()
+        if queryset:
+            serializer = self.get_serializer_class()
+            serializer_data = serializer(queryset, many=False).data
+            return response.Response(serializer_data, status=status.HTTP_200_OK)
+        return response.Response({}, status=status.HTTP_200_OK)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer_class()
         serializer = serializer(data=request.data)
