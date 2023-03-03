@@ -31,6 +31,6 @@ def clear_notification_scheduler():
         data['notification_id'] = str(notification.id)
         FireBaseActions.send_message(user_tokens=[fcm_token], data=data)
         job.last_triggered_on = timezone.now()
-        if job.fetch_scheduled_time():
-            job.scheduled_time = job.fetch_scheduled_time()
+        if patient_plan.fetch_scheduled_time():
+            job.scheduled_time = patient_plan.fetch_scheduled_time()
         job.save()
