@@ -56,17 +56,22 @@ class PatientDataViewSet(generics.ListCreateAPIView):
             if "diseases" in serializer.validated_data:
                 diseases = serializer.validated_data.pop("diseases")
             if "email" in serializer.validated_data:
-                user.email = serializer.validated_data.pop("email")
+                email = serializer.validated_data.pop("email")
+                user.email = email
             if "display_picture" in serializer.validated_data:
-                user.display_picture = serializer.validated_data.pop("display_picture")
+                display_picture = serializer.validated_data.pop("display_picture")
+                user.display_picture = display_picture
             if "medical_history" in serializer.validated_data:
                 medical_history = serializer.validated_data.pop("medical_history")
             if "first_name" in serializer.validated_data:
-                user.first_name = serializer.validated_data.pop("first_name")
+                first_name = serializer.validated_data.pop("first_name")
+                user.first_name = first_name
             if "last_name" in serializer.validated_data:
-                user.last_name = serializer.validated_data.pop("last_name")
+                last_name = serializer.validated_data.pop("last_name")
+                user.last_name = last_name
             if "fcm_token" in serializer.validated_data:
-                user.fcm_token = serializer.validated_data.pop("fcm_token")
+                fcm_token = serializer.validated_data.pop("fcm_token")
+                user.fcm_token = fcm_token
             patient_detail = self.model.objects.filter(patient_id=self.request.user.id).first()
             if patient_detail:
                 self.model.objects.filter(patient_id=self.request.user.id).update(**serializer.validated_data)
