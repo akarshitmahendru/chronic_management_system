@@ -2,6 +2,8 @@ from django.contrib import admin
 from disease_management.models import Disease, PatientPersonalizedPlan, DiseaseDefaultPlan
 from utils.constants import RoleEnum
 from notifications.models import NotificationsScheduler
+from utils.push_notifications import FireBaseActions
+
 
 # Register your models here.
 
@@ -39,8 +41,12 @@ class PatientPersonalizedPlanAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super(PatientPersonalizedPlanAdmin, self).save_model(request, obj, form, change)
         from notifications.models import NotificationsScheduler
+        if not obj.id:
+            data = {"title": f"New {obj.get_plan_display()} has been added.",
+                    "body": f"Check the plan suggested by your doctor to boost your health.",
+                    "notification_id": 0}
+            FireBaseActions.send_message(user_tokens=[obj.patient.fcm_token], data=data)
         scheduled_time = obj.fetch_scheduled_time()
         if scheduled_time and obj.notification_heading:
             NotificationsScheduler.objects.update_or_create(patient_plan_id=obj.id,
                                                             defaults={"scheduled_time": scheduled_time})
-
