@@ -38,7 +38,8 @@ class PatientPersonalizedAPI(views.APIView):
         if not PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
             result = self.default_plan_model.objects.filter(disease_id__in=user_diseases).order_by(
                 "priority", "created_at").values("exercise_plan", "diet_plan", "medication_plan", "monitoring").first()
-        elif PatientPersonalizedPlan.objects.filter(patient_id=user.id).exists():
+        elif PatientPersonalizedPlan.objects.filter(patient_id=user.id, description__isnull=False).exclude(
+                description="").exists():
             plans = PatientPersonalizedPlan.objects.filter(patient_id=user.id)
             result = {}
             for plan_obj in plans:
