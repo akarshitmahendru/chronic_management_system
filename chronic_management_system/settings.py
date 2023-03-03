@@ -220,7 +220,7 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_BEAT_SCHEDULE = {
     'five_minute_task': {
         "task": "utils.tasks.clear_notification_scheduler",
-        "schedule": datetime.timedelta(minute=5)
+        "schedule": datetime.timedelta(minutes=5)
     }
 }
 
