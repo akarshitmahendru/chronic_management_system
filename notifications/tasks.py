@@ -1,6 +1,5 @@
 import datetime
 import celery
-from celery import Task
 from django.utils import timezone
 from utils.constants import PlanStatusEnum
 from django.db.models import Q
